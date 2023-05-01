@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Order a pizza</h1>
+
+    <h2>{{note}}</h2>
+
+    <form action="{% url 'pizza.order' %}" method="POST">{% csrf_token %}
+
+        {{pizza_form}}
+
+        <input 
+            type="submit"
+            value="Order"
+        />
+
+    </form>
+
+{% endblock %}
