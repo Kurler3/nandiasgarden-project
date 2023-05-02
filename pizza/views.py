@@ -19,12 +19,8 @@ def order(request):
             
             created_pizza = filled_form.save() # Save the pizza in db
             
-            
-            
             clean_data = filled_form.cleaned_data
-
-            print(clean_data)
-
+            
             # Create a note to send back to client
             note = 'Thanks for ordering! Your %s %s and %s pizza is on its way!' %(clean_data['size'], clean_data['topping1'], clean_data['topping2'])
 
@@ -39,6 +35,19 @@ def order(request):
                     'multiple_form': multiple_form,
                     'created_pizza_pk': created_pizza
                 })          
+        else:
+            created_pizza_pk = None
+            note = 'Pizza order has failed. Please try again.'
+            return render(
+                request, 
+                'pizza/order.html',
+                {
+                    'note': note,
+                    'pizza_form': filled_form,
+                    'created_pizza_pk': created_pizza_pk,
+                }
+            )
+            
     else:
         form = PizzaForm() 
         return render(
